@@ -29,7 +29,7 @@ pip install tqdm send2trash
 python better_uv_cache_clean.py
 ```
 
-You can also execute it by specifying the URL directly.
+or execute it by specifying the URL directly.
 
 ```bash
 uv run https://raw.githubusercontent.com/hetima/better-uv-cache-clean/main/better_uv_cache_clean.py
