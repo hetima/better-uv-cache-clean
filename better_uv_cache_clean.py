@@ -1,3 +1,8 @@
+# /// script
+# requires-python = ">=3.8"
+# dependencies = ["send2trash", "tqdm"]
+# ///
+
 """
 better_uv_cache_clean.py
 
