@@ -29,6 +29,12 @@ pip install tqdm send2trash
 python better_uv_cache_clean.py
 ```
 
+You can also execute it by specifying the URL directly.
+
+```bash
+uv run https://raw.githubusercontent.com/hetima/better-uv-cache-clean/main/better_uv_cache_clean.py
+```
+
 Running this command will:
 1. Detect the uv cache directory
 2. Scan all subfolders in the `archive-v0` folder
