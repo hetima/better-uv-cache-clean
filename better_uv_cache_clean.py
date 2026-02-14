@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 better_uv_cache_clean.py
 
