@@ -13,6 +13,7 @@ import sys
 import argparse
 import subprocess
 import shutil
+# import time
 from pathlib import Path
 from typing import List, Dict, Tuple
 from tqdm import tqdm
@@ -47,19 +48,6 @@ def get_uv_cache_dir() -> Path:
         sys.exit(1)
 
 
-def check_hardlink_count(file_path: Path) -> int:
-    """
-    ファイルのハードリンク数を取得する
-    
-    Args:
-        file_path: ファイルのパス
-    
-    Returns:
-        int: ハードリンク数
-    """
-    return file_path.stat().st_nlink
-
-
 def check_subfolder(subfolder: Path) -> Tuple[bool, int]:
     """
     サブフォルダ内のすべてのファイルのハードリンク数をチェックし、
@@ -77,11 +65,12 @@ def check_subfolder(subfolder: Path) -> Tuple[bool, int]:
     total_size = 0
     for file_path in subfolder.rglob("*"):
         if file_path.is_file():
-            link_count = check_hardlink_count(file_path)
+            stat_result = file_path.stat()
+            link_count = stat_result.st_nlink
             if link_count >= 2:
                 return False, total_size
             # ディスク上のサイズを加算
-            total_size += file_path.stat().st_size
+            total_size += stat_result.st_size
     return True, total_size
 
 
@@ -211,7 +200,12 @@ def main():
     
     # archive-v0フォルダを調査
     archive_path = cache_dir / "archive-v0"
+    # start_time = time.time()
     results = scan_archive_folder(archive_path)
+    # end_time = time.time()
+    # elapsed_time = end_time - start_time
+    # print(f"Elapsed time: {elapsed_time:.2f}secs\n")
+    print(" ")
     
     # 削除可能なサブフォルダ（True）を一覧表示
     deletable_folders = [r for r in results if r["is_deletable"]]
